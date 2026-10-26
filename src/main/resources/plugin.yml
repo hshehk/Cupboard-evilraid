@@ -1,0 +1,22 @@
+name: CupBoard
+main: tw.mics.spigot.plugin.cupboard.Cupboard
+version: ${project.version}
+description: ${project.description}
+author: tsukieru
+authors: [tsukieru]
+website: https://mics.tw
+api-version: 1.20
+folia-supported: true
+
+commands:
+  gold:
+    description: Manage your gold block
+    usage: /gold give <player> or /gold nearest
+    
+permissions:
+  cupboard.admin:
+    description: this can reload cupboard config
+    default: op
+  cupboard.bypass:
+    description: this can let player bypass cupboard protect
+    default: op

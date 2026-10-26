@@ -1,0 +1,113 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- Project properties. -->
+    <groupId>tw.mics.spigot.plugin.cupboard</groupId>
+    <artifactId>Cupboard</artifactId>
+    <packaging>jar</packaging>
+    <version>1.0.0</version>
+    <name>Cupboard-1.0.0</name>
+    <url>http://mics.tw</url>
+    <description>Let a PvP server as like as Rust fun, but still keep Minecraft original play style. Compatible with Spigot, Paper, Purpur, and Folia.</description>
+
+    <!-- Properties -->
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.mainclass>tw.mics.spigot.plugin.cupboard.Cupboard</project.mainclass>
+        <!--Use a profile to overwrite this-->
+        <outputdir>${project.build.outputDirectory}</outputdir>
+        <mc-version>1.20.4</mc-version>
+        <bukkit-ver>R0.1-SNAPSHOT</bukkit-ver>
+        <testDir>${basedir}/src/test/</testDir>
+        <srcDir>${basedir}/src/main/java/</srcDir>
+    </properties>
+
+    <!-- Build instructions -->
+    <build>
+        <finalName>Cupboard-1.0.0</finalName>
+        <defaultGoal>package</defaultGoal>
+        <testSourceDirectory>${testDir}</testSourceDirectory>
+        <sourceDirectory>${srcDir}</sourceDirectory>
+        <resources>
+            <resource>
+        		<filtering>true</filtering>
+                <directory>${basedir}/src/main/resources/</directory>
+                <includes>
+                	<include>plugin.yml</include>
+                	<include>locales/*</include>
+              	</includes>
+            </resource>
+        </resources>
+        <plugins>
+	        <plugin>
+			    <groupId>org.apache.maven.plugins</groupId>
+			    <artifactId>maven-compiler-plugin</artifactId>
+			    <version>3.8.1</version>
+			    <configuration>
+			        <source>17</source>
+			        <target>17</target>
+			    </configuration>
+			</plugin>
+			<plugin>
+			    <groupId>org.apache.maven.plugins</groupId>
+			    <artifactId>maven-shade-plugin</artifactId>
+			    <version>3.5.1</version>
+			    <executions>
+			        <execution>
+			            <phase>package</phase>
+			            <goals>
+			                <goal>shade</goal>
+			            </goals>
+			            <configuration>
+			                <filters>
+			                    <filter>
+			                        <!-- sqlite-jdbc 內建各平台原生檔，伺服器只跑在 Linux x86_64，其他平台的都濾掉減小體積 -->
+			                        <artifact>org.xerial:sqlite-jdbc</artifact>
+			                        <excludes>
+			                            <exclude>org/sqlite/native/FreeBSD/**</exclude>
+			                            <exclude>org/sqlite/native/Linux-Android/**</exclude>
+			                            <exclude>org/sqlite/native/Linux-Musl/**</exclude>
+			                            <exclude>org/sqlite/native/Linux/arm/**</exclude>
+			                            <exclude>org/sqlite/native/Linux/armv6/**</exclude>
+			                            <exclude>org/sqlite/native/Linux/armv7/**</exclude>
+			                            <exclude>org/sqlite/native/Linux/aarch64/**</exclude>
+			                            <exclude>org/sqlite/native/Linux/ppc64/**</exclude>
+			                            <exclude>org/sqlite/native/Linux/riscv64/**</exclude>
+			                            <exclude>org/sqlite/native/Linux/x86/**</exclude>
+			                            <exclude>org/sqlite/native/Mac/**</exclude>
+			                            <exclude>org/sqlite/native/Windows/**</exclude>
+			                        </excludes>
+			                    </filter>
+			                </filters>
+			            </configuration>
+			        </execution>
+			    </executions>
+			</plugin>
+		</plugins>
+    </build>
+
+    <!-- Repositories -->
+    <repositories>
+        <!-- Spigot -->
+        <repository>
+            <id>spigot-repo</id>
+            <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
+        </repository>
+    </repositories>
+
+    <dependencies>
+        <!--Spigot API-->
+        <dependency>
+               <groupId>org.spigotmc</groupId>
+               <artifactId>spigot-api</artifactId>
+               <version>${mc-version}-${bukkit-ver}</version>
+               <scope>provided</scope>
+        </dependency>
+            <dependency>
+               <groupId>org.xerial</groupId>
+               <artifactId>sqlite-jdbc</artifactId>
+               <version>3.53.2.0</version>
+        </dependency>
+    </dependencies>
+</project>

@@ -1,0 +1,23 @@
+gold-block:
+  op-bypass: '&c警告: 管理员权限已忽视保护区'
+  place-gold-block: 金块已放置并取得授权。
+  remove-gold-block: 金块已拆除
+  gold-block-too-close-to-place: 距离其他未授权金块太近
+  access-blocked-gold-block: 被挡住了，无法授权/取消授权。
+  gold-data-not-found: 此金块不是由使用者放置或资料遗失，请重新放置。
+  grant-access: 已授权
+  revoke-access: 已取消授权
+  no-access: '&4没有权限'
+tnt:
+  special-name: '&4恶灵炸弹'
+  tnt-lore:
+  - '&r&6放置后自动点燃'
+  - '&r&6可以破坏保护区'
+  - '&r&6可以破坏水、岩浆、黑曜石'
+  evilessence-name: '&5邪恶精华'
+  evilessence-lore:
+  - '&r&6邪恶精华.'
+  - '&r&6有了它, 你才可以放置 TNT.'
+  - '&r&6有了它, 你才可以使用指南针.'
+  tnt-not-enough: '&4手上的 TNT 不足 (需要 2 个)'
+  evilessence-not-enough: '&4邪恶精华不足'

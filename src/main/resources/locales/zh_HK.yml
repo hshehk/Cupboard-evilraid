@@ -1,0 +1,23 @@
+gold-block:
+  op-bypass: '&c警告: 管理員權限已忽視保護區'
+  place-gold-block: 金磚已放置並取得授權。
+  remove-gold-block: 金磚已拆除
+  gold-block-too-close-to-place: 距離其他未授權金磚太近
+  access-blocked-gold-block: 被擋住了，無法授權/取消授權。
+  gold-data-not-found: 此金磚不是由使用者放置或資料遺失，請重新放置。
+  grant-access: 已授權
+  revoke-access: 已取消授權
+  no-access: '&4沒有權限'
+tnt:
+  special-name: '&4惡靈炸彈'
+  tnt-lore:
+  - '&r&6放置後自動點燃'
+  - '&r&6可以破壞保護區'
+  - '&r&6可以破壞水、岩漿、黑曜石'
+  evilessence-name: '&5邪惡精華'
+  evilessence-lore:
+  - '&r&6邪惡精華.'
+  - '&r&6有了他, 你才可以放置 TNT.'
+  - '&r&6有了他, 你才可以使用指南針.'
+  tnt-not-enough: '&4手上的 TNT 不足 (需要 2 個)'
+  evilessence-not-enough: '&4邪惡精華不足'
