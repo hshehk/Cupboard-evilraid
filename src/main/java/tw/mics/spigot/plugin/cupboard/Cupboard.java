@@ -93,7 +93,7 @@ public class Cupboard extends JavaPlugin implements Listener {
         }
         
         //force unregister again
-        HandlerList.unregisterAll(this);
+        HandlerList.unregisterAll((org.bukkit.plugin.Plugin) this);
         // this.getServer().getScheduler().cancelAllTasks(); // 這個 method 不見了.. 先註解掉
 	}
     
