@@ -6,6 +6,7 @@ import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import tw.mics.spigot.plugin.cupboard.command.GoldCommand;
@@ -93,7 +94,7 @@ public class Cupboard extends JavaPlugin implements Listener {
         }
         
         //force unregister again
-        HandlerList.unregisterAll((org.bukkit.plugin.Plugin) this);
+        HandlerList.unregisterAll((Plugin) this); //Cupboard 同時是 Plugin 與 Listener，必須明確指定型別
         // this.getServer().getScheduler().cancelAllTasks(); // 這個 method 不見了.. 先註解掉
 	}
     
