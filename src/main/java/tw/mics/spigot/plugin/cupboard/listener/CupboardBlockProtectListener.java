@@ -286,6 +286,43 @@ public class CupboardBlockProtectListener extends MyListener {
         }
     }
     
+    /**
+     * 在「放置真正發生之前」就擋下方塊放置。
+     * 只在 BlockPlaceEvent 取消的話，原版流程是先放下去、再用快照還原：被取代位置上的容器會先噴出內容物，
+     * 還原時又被放回去，就能複製物品。這裡改成在互動階段直接拒絕使用手上的方塊，世界完全不會被動到。
+     * （其他插件取消的放置仍由 MultiPlaceRollbackGuard 兜底。）
+     */
+    @EventHandler(priority = EventPriority.HIGH)
+    public void onPlaceIntent(PlayerInteractEvent event){
+        if(event.getAction() != Action.RIGHT_CLICK_BLOCK) return;
+        if(event.useItemInHand() == org.bukkit.event.Event.Result.DENY) return;
+        ItemStack item = event.getItem();
+        if(item == null || !item.getType().isBlock()) return;
+        Block clicked = event.getClickedBlock();
+        if(clicked == null) return;
+        Player p = event.getPlayer();
+        if(!Config.ENABLE_WORLD.getStringList().contains(p.getWorld().getName())) return;
+        //蹲下才是放置；沒蹲下時如果點到可互動方塊，行為由 onPlayerInteract 處理
+        if(!p.isSneaking() && (clicked.getState() instanceof InventoryHolder || isLimitInteractBlock(clicked.getType()))) return;
+        //特殊TNT允許放進領地，維持原本行為
+        if(item.getType() == Material.TNT && Config.TNT_SP_ENABLE.getBoolean() && Util.isSpecialTNTItem(item)) return;
+
+        Block target = clicked.getRelative(event.getBlockFace());
+        boolean limited;
+        if(clicked.getType().isSolid()){
+            limited = data.checkIsLimit(target, p);
+        } else {
+            //可被取代的方塊（草、雪層等）會直接取代被點的方塊；無法確定時兩邊都受限才拒絕，避免誤擋領地邊界
+            limited = data.checkIsLimit(target, p) && data.checkIsLimit(clicked, p);
+        }
+        if(!limited) return;
+        if(this.plugin.isOP(p)) return;
+
+        p.sendMessage(Locales.NO_ACCESS.getString());
+        event.setUseItemInHand(org.bukkit.event.Event.Result.DENY);
+        p.updateInventory();
+    }
+    
     //禁止物件和限制區域互動
     @EventHandler
     public void onEntryInteract(EntityInteractEvent event){
